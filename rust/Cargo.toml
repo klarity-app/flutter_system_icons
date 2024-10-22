@@ -2,9 +2,19 @@
 name = "flutter_system_icons"
 version = "0.1.0"
 edition = "2021"
+authors = ["eapcj <info@klarity.app>"]
+license = "Proprietary"
 
 [lib]
 crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 flutter_rust_bridge = "=2.3.0"
+base64 = "0.22.1"
+cocoa = "0.26.0"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+libc = "0.2"
+objc = "0.2"
+core-foundation = "0.9"
+core-graphics = "0.22"

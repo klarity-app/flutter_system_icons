@@ -1,3 +1,8 @@
-rust_input: crate::api
+rust_input: crate::api::common
 rust_root: rust/
-dart_output: lib/src/rust
+web: false
+dart_output: lib/src/generated
+# full_dep: true
+# dart3: true
+# type_64bit_int: true
+# enable_lifetime: true

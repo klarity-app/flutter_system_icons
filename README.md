@@ -1,92 +1,154 @@
-# flutter_system_icons
+# Flutter System Icons
 
-A new Flutter FFI plugin project.
+[![pub package](https://img.shields.io/pub/v/flutter_system_icons.svg)](https://pub.dev/packages/flutter_system_icons)
+[![License: Proprietary](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
-## Getting Started
+Effortlessly retrieve and display system icons in your Flutter desktop applications.
 
-This project is a starting point for a Flutter
-[FFI plugin](https://docs.flutter.dev/development/platform-integration/c-interop),
-a specialized package that includes native code directly invoked with Dart FFI.
+![Flutter System Icons Demo](https://path.to/your/demo.gif)
+![Example App](assets/example_app.png)
 
-## Project structure
+## 🚀 Features
 
-This template uses the following structure:
+- 🖼️ Retrieve system icons for files, directories, and applications
+- 🖥️ Easy-to-use widgets for displaying system icons
+- 🚀 Efficient caching and asynchronous loading
+- 🌐 Cross-platform support (currently focused on macOS)
 
-* `src`: Contains the native source code, and a CmakeFile.txt file for building
-  that source code into a dynamic library.
+## 🛠️ Installation
 
-* `lib`: Contains the Dart code that defines the API of the plugin, and which
-  calls into the native code using `dart:ffi`.
-
-* platform folders (`android`, `ios`, `windows`, etc.): Contains the build files
-  for building and bundling the native code library with the platform application.
-
-## Building and bundling native code
-
-The `pubspec.yaml` specifies FFI plugins as follows:
+Add `flutter_system_icons` to your `pubspec.yaml`:
 
 ```yaml
-  plugin:
-    platforms:
-      some_platform:
-        ffiPlugin: true
+dependencies:
+  flutter_system_icons: ^0.1.0
 ```
 
-This configuration invokes the native build for the various target platforms
-and bundles the binaries in Flutter applications using these FFI plugins.
+Then run:
 
-This can be combined with dartPluginClass, such as when FFI is used for the
-implementation of one platform in a federated plugin:
-
-```yaml
-  plugin:
-    implements: some_other_plugin
-    platforms:
-      some_platform:
-        dartPluginClass: SomeClass
-        ffiPlugin: true
+```bash
+flutter pub get
 ```
 
-A plugin can have both FFI and method channels:
+## 🔧 Usage
 
-```yaml
-  plugin:
-    platforms:
-      some_platform:
-        pluginClass: SomeName
-        ffiPlugin: true
+### Import the package
+
+```dart
+import 'package:flutter_system_icons/flutter_system_icons.dart';
 ```
 
-The native build systems that are invoked by FFI (and method channel) plugins are:
+### File Icon
 
-* For Android: Gradle, which invokes the Android NDK for native builds.
-  * See the documentation in android/build.gradle.
-* For iOS and MacOS: Xcode, via CocoaPods.
-  * See the documentation in ios/flutter_system_icons.podspec.
-  * See the documentation in macos/flutter_system_icons.podspec.
-* For Linux and Windows: CMake.
-  * See the documentation in linux/CMakeLists.txt.
-  * See the documentation in windows/CMakeLists.txt.
+```dart
+FileIconWidget(
+  filePath: '/path/to/file.txt',
+  radius: 16.0,
+)
+```
 
-## Binding to native code
+### Directory Icon
 
-To use the native code, bindings in Dart are needed.
-To avoid writing these by hand, they are generated from the header file
-(`src/flutter_system_icons.h`) by `package:ffigen`.
-Regenerate the bindings by running `dart run ffigen --config ffigen.yaml`.
+```dart
+DirectoryIconWidget(
+  directoryPath: '/path/to/directory',
+  radius: 16.0,
+)
+```
 
-## Invoking native code
+### Application Icon (macOS only)
 
-Very short-running native functions can be directly invoked from any isolate.
-For example, see `sum` in `lib/flutter_system_icons.dart`.
+```dart
+BundleIconWidget(
+  bundleIdentifier: 'com.apple.finder',
+  radius: 16.0,
+)
+```
 
-Longer-running functions should be invoked on a helper isolate to avoid
-dropping frames in Flutter applications.
-For example, see `sumAsync` in `lib/flutter_system_icons.dart`.
+### Using the IconService directly
 
-## Flutter help
+```dart
+final iconService = ref.watch(iconServicePOD);
+final icon = await iconService.getIconByPath('/path/to/file.txt');
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+if (icon != null) {
+  // Use the icon data
+  print('Icon size: ${icon.width}x${icon.height}');
+}
+```
 
+## 📱 Example
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_system_icons/flutter_system_icons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+void main() => runApp(ProviderScope(child: MyApp()));
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Flutter System Icons Demo')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FileIconWidget(
+                filePath: '/Users/username/Documents/example.txt',
+                radius: 32.0,
+              ),
+              SizedBox(height: 20),
+              DirectoryIconWidget(
+                directoryPath: '/Users/username/Documents',
+                radius: 32.0,
+              ),
+              SizedBox(height: 20),
+              BundleIconWidget(
+                bundleIdentifier: 'com.apple.finder',
+                radius: 32.0,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+## 💻 Platform Support
+
+| Platform | Support |
+|----------|---------|
+| macOS    | ✅ Stable |
+| Windows  | 🚧 Planned |
+| Linux    | 🚧 Planned |
+
+## 🤝 Contributing
+
+We welcome contributions to improve Flutter System Icons, especially for Windows and Linux support. If you encounter any issues or have suggestions, please open an issue on our [GitHub repository](https://github.com/klarity-app/flutter_system_icons).
+
+To contribute:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+Please note that all contributions are subject to review and approval by the Klarity team.
+
+## 📄 License
+
+This project is proprietary software owned by Klarity. All rights reserved. See the [LICENSE](LICENSE) file for details.
+
+## 📬 Contact
+
+For any inquiries or support, please contact us at info@klarity.app
+
+---
+
+Made with ❤️ by [Klarity](https://www.klarity.app)
