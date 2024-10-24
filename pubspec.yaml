@@ -1,6 +1,6 @@
 name: flutter_system_icons
 description: A Flutter plugin for retrieving system icons on macOS and other platforms.
-version: 0.1.0
+version: 0.0.2
 homepage: https://github.com/klarity-app/flutter_system_icons
 
 environment:
@@ -16,7 +16,7 @@ dependencies:
   flutter_hooks: ^0.18.6
   hooks_riverpod: ^2.3.6
   ffi: ^2.0.2
-  flutter_rust_bridge: ^2.3.0
+  flutter_rust_bridge: 2.5.0
 
 dev_dependencies:
   flutter_test:
