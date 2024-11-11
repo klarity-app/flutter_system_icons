@@ -16,7 +16,7 @@ dependencies:
   flutter_hooks: ">=0.18.6 <0.21.0"
   hooks_riverpod: ^2.3.6
   ffi: ^2.0.2
-  flutter_rust_bridge: 2.5.1
+  flutter_rust_bridge: 2.6.0
 
 dev_dependencies:
   flutter_test:
